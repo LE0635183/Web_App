@@ -2,10 +2,31 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const {v4: uuidv4} = require("uuid"); // import
+const morgan = require('morgan')
 
 uuidv4(); // Generate a new UUID
 
-const books = app.use(express.json()); // body-parser for JSON
+// 1 Logger middleware
+app.use(morgan('tiny'))
+// customed logger
+app.use(function (req, res, next) {
+  console.log(`Request: ${new Date()} ${req.method} ${req.path} ${JSON.stringify(req.query)}`)
+  next();
+})
+// 2 Body-parser middleware
+app.use(express.json()); // body-parser for JSON
+// 3 auth middleware
+app.use(function (req, res, next) {
+  if (req.headers.user_id) {
+    // this is fine
+    next();
+  } else {
+    // Early exit
+    res.status(401);
+    res.send("Unauthorized");
+  }
+  
+});
 
 // path.join is used the right way to join the path from the os used
 // /static is the path used in the browser to access the public folder
