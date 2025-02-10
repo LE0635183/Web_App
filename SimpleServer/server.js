@@ -1,17 +1,20 @@
 const express = require("express");
 const path = require("path");
 const app = express();
+const {v4: uuidv4} = require("uuid"); // import
+
+uuidv4(); // Generate a new UUID
 
 const books = app.use(express.json()); // body-parser for JSON
 
 // path.join is used the right way to join the path from the os used
 // /static is the path used in the browser to access the public folder
-app.use("/static", express.static(path.join(__dirname, "public")));
+app.use("/static", express.static(path.join(__dirname, "public"))); // ONLY GET
 
-app.use("/", express.static(path.join(__dirname, "dist")));
+app.use("/", express.static(path.join(__dirname, "dist"))); // ONLY GET
 
 // get this for the server
-app.get("/hello", function (req, res) {
+app.get("/hello", function (req, res) { 
   res.send("Hello World");
 });
 
@@ -79,6 +82,23 @@ app.get("/books/:bookId", function (req, res) {
   } else {
     res.status(404);
     res.send("Book not found");
+  }
+});
+
+// Exercise 3
+app.post("/books", function (req, res) {
+  const body = req.body;
+  console.log("body: ", body);
+  if (body.title && body.description) {
+    res.status(201);
+    res.send({
+      id: uuidv4(),
+      title: body.title,
+      description: body.description,
+    });
+  } else {
+    res.status(400);
+    res.send("Missing description or title");
   }
 });
 

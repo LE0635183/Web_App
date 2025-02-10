@@ -6,6 +6,9 @@ const PORT = 3000;
 // Use cookie-parser middleware
 app.use(cookieParser());
 
+// FIX : add an url-encoded parser
+app.use(express.urlencoded({ extended: true }));
+
 // In-memory storage for votes (for demo purposes)
 const votes = {
   yes: 0,
@@ -30,8 +33,8 @@ app.get('/', (req, res) => {
 
 // Route to handle the voting process
 app.post('/vote', (req, res) => {
-  const userVote = req.query.vote; // This gets the value from the form
-
+  const userVote = req.body.vote; // This gets the value from the form But need to be from the body
+  console.log(userVote);  
   if (!userVote || !['yes', 'no'].includes(userVote)) {
     return res.status(400).send('Invalid vote');
   }
