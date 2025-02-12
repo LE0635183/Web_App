@@ -2,7 +2,11 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const {v4: uuidv4} = require("uuid"); // import
-const morgan = require('morgan')
+const morgan = require('morgan');
+const examplesRouter = require('./Routers/examples.router');
+const ticketsRouter = require("./Routers/tickets.router");
+
+
 
 uuidv4(); // Generate a new UUID
 
@@ -40,90 +44,8 @@ app.get("/hello", function (req, res) {
   res.send("Hello World");
 });
 
-// path params exemple
-app.get("/users/:userId/books/:bookId", function (req, res) {
-  console.log(req.params);
-  res.send("OK");
-});
-
-// query params exemple
-app.get("/cars", function (req, res) {
-  console.log(req.query);
-  res.send("query recieved");
-});
-
-// headers params exemple
-app.get("/auth", function (req, res) {
-  const headers = req.headers;
-  if (headers.username === "toto") {
-    res.status(200);
-    res.send("headers recieved");
-  } else {
-    res.status(401);
-    res.send("headers not recieved");
-  }
-});
-
-// body params exemple
-
-app.post("/cars", function (req, res) {
-  console.log(req.body);
-  res.status(201);
-  res.send("Car created");
-});
-
-// Exercise 1
-app.delete("/eraser", function (req, res) {
-  const query = req.query;
-  console.log("query: ", query);
-  if (req.query.confirm === "true") {
-    res.status(204);
-    res.send("Eraser deleted");
-  } else {
-    res.status(400);
-    res.send("Eraser not deleted");
-  }
-});
-
-// Exercise 2
-app.get("/books/:bookId", function (req, res) {
-  const body = req.params;
-  console.log("body: ", body);
-  if (body.bookId === "135") {
-    res.status(200);
-    res.send({
-      id: 135,
-      title: "The Catcher in the Rye",
-    });
-  } else if (body.bookId === "1762") {
-    res.status(200);
-    res.send({
-      id: 1762,
-      title: "the Wizar of Oz",
-    });
-  } else {
-    res.status(404);
-    res.send("Book not found");
-  }
-});
-
-// Exercise 3
-app.post("/books", function (req, res) {
-  const body = req.body;
-  console.log("body: ", body);
-  if (body.title && body.description) {
-    res.status(201);
-    res.send({
-      id: uuidv4(),
-      title: body.title,
-      description: body.description,
-    });
-  } else {
-    throw new Error("Missing description or title");
-    //res.status(400);
-    //res.send("Missing description or title");
-  }
-});
+app.use('/examples', examplesRouter)
+app.use("/tickets", ticketsRouter)
 
 // 5 Error handling middleware
 app.use(function (err, req, res, next) {
