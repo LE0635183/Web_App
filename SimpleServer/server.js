@@ -16,7 +16,7 @@ app.use(function (req, res, next) {
 // 2 Body-parser middleware
 app.use(express.json()); // body-parser for JSON
 // 3 auth middleware
-app.use(function (req, res, next) {
+/* app.use(function (req, res, next) {
   if (req.headers.user_id) {
     // this is fine
     next();
@@ -24,9 +24,10 @@ app.use(function (req, res, next) {
     // Early exit
     res.status(401);
     res.send("Unauthorized");
-  }
-  
-});
+  }  
+}); */
+
+// 4 logic router middleware
 
 // path.join is used the right way to join the path from the os used
 // /static is the path used in the browser to access the public folder
@@ -118,9 +119,23 @@ app.post("/books", function (req, res) {
       description: body.description,
     });
   } else {
-    res.status(400);
-    res.send("Missing description or title");
+    throw new Error("Missing description or title");
+    //res.status(400);
+    //res.send("Missing description or title");
   }
+});
+
+// 5 Error handling middleware
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  if(err.message){
+    res.send({message: err.message})
+  }
+  else{
+    res.status(500);
+    res.send({message: "An error occured"})
+  }
+  //next()
 });
 
 // this is the port used for the server
