@@ -7,8 +7,21 @@ const { schedualLogJob } = require('./memory_cron.service')
 
 const pathToAccessLog = path.join(__dirname, 'logs/request_combined.log')
 const accessLogStream = fs.createWriteStream(pathToAccessLog, { flags: 'a' })
+const logsAuth = { username: "admin", password: "admin" }
 
 app.use(morgan('combined', { stream: accessLogStream }))
+
+app.use("/logs", function (req, res, next) {
+    const b64auth = (req.headers.authorization || '').split(' ')[1] || ''
+    const [username, password] = Buffer.from(b64auth, 'base64').toString().split(':')
+
+    if ( username === logsAuth.username && password === logsAuth.password ) {
+       return next()
+    }else {
+        res.set('WWW-Authenticate', 'Basic realm="Restricted Area"')
+        res.status(401).send('Authentication required.')
+    }
+})
 
 app.use('/logs', express.static(path.join(__dirname, 'logs')))
 
