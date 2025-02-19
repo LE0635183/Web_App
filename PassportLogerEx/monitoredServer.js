@@ -12,6 +12,7 @@ const logsAuth = { username: "admin", password: "admin" }
 app.use(morgan('combined', { stream: accessLogStream }))
 
 app.use("/logs", function (req, res, next) {
+    console.log('req.headers.authorization: ', req.headers.authorization);
     const b64auth = (req.headers.authorization || '').split(' ')[1] || ''
     const [username, password] = Buffer.from(b64auth, 'base64').toString().split(':')
 
