@@ -7,6 +7,7 @@ const examplesRouter = require('./Routers/examples.router');
 const ticketsRouter = require("./Routers/tickets.router");
 const { startCron } = require("./crons.service");
 const { connect } = require("./database/database");
+const aggregateRouter = require("./Routers/aggregateEx.router");
 
 
 
@@ -48,6 +49,7 @@ app.get("/hello", function (req, res) {
 
 app.use('/examples', examplesRouter)
 app.use("/tickets", ticketsRouter)
+app.use("/aggregateEx", aggregateRouter)
 
 // 5 Error handling middleware
 app.use(function (err, req, res, next) {
