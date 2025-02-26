@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const examplesRouter = require('./Routers/examples.router');
 const ticketsRouter = require("./Routers/tickets.router");
 const { startCron } = require("./crons.service");
+const { connect } = require("./database/database");
 
 
 
@@ -62,8 +63,9 @@ app.use(function (err, req, res, next) {
 });
 
 // this is the port used for the server
-app.listen(3000, () => {
+app.listen(3000, async () => {
   // connect to a database
   // startCron();
-  console.log("Server is running on http://localhost:3000");
+  await connect()
+  console.log("Server is running on http://localhost:3000")
 });
