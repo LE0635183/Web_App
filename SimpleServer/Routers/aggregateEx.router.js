@@ -1,6 +1,6 @@
 const express = require("express");
-const { client } = require("../database/database");
 const aggregateRouter = express.Router();
+const { client } = require("../database/database");
 
 const database = client.db("MongoDbEx");
 const employeesCollection = database.collection("employees");
