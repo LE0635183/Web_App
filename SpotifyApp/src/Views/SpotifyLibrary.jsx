@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useNavigate } from 'react'
 import SearchResults from '../Components/SearchResults'
 import { performSearch, performSearchMore } from '../data/spotify';
 import MusicPlayer from '../Components/MusicPlayer';
@@ -6,6 +6,7 @@ import spotifyIcon from '../assets/Spotify_Icon_CMYK_White.png';
 import spotifyLogo from '../assets/Spotify_Logo_CMYK_Black.png';
 
 function SpotifyLibrary() {
+  const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false);
   const [isVisibleResults, setIsVisibleResults] = useState(false)
   const [isVisiblePlayer, setIsVisiblePlayer] = useState(false)
@@ -57,7 +58,7 @@ function SpotifyLibrary() {
   return (
     <div className="text-center" style={playerOpen}>
       <div className="container">
-        <a className="btn btn-secondary btn-border-radius-0 position-fixed top-0 start-0" href="/home">Back</a>
+        <a className="btn btn-secondary btn-border-radius-0 position-fixed top-0 start-0" onClick={()=> navigate('/home')}>Back</a>
       </div>
       <div className="container pt-5">
         <div className="container d-flex justify-content-center align-items-center centered-content">

@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useNavigate } from 'react';
 import LocalTrack from '../Components/LocalTrack';
 import 'react-h5-audio-player/lib/styles.css';
 import { localTracks } from '../data/localTracks';
 import MusicPlayer from '../Components/MusicPlayer';
 
+
 function LocalLibrary() {
+  const navigate = useNavigate();
+
   const [source, setSource] = useState('');
   const [currentSong, setCurrentSong] = useState({
     name: '',
@@ -55,7 +58,7 @@ function LocalLibrary() {
             );
           })}
         </div>
-        <a className='btn btn-secondary' href='/'>
+        <a className='btn btn-secondary' onClick={()=> navigate('/')}>
           Back
         </a>
       </div>
