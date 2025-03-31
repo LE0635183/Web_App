@@ -1,4 +1,5 @@
-import React, { useState, useNavigate } from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import SearchResults from '../Components/SearchResults'
 import { performSearch, performSearchMore } from '../data/spotify';
 import MusicPlayer from '../Components/MusicPlayer';
