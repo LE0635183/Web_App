@@ -8,7 +8,7 @@ const navigate = useNavigate() // 2
   return (
     <div className="container">
       <div className="container" style={{ paddingTop: '200px' }}>
-        <img src="src/assets/010-04.jpg" alt="" style={{height: '300px'}}/>
+        <img src="/assets/010-04.jpg" alt="" style={{height: '300px'}}/>
         <p>Featuring the best music that $0.00 could buy!</p>
         <h3>Choose the library you would like to access:</h3>
         <br />
