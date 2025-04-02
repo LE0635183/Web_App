@@ -10,7 +10,7 @@ function initializeS3() {
 
 async function putObject(file) {
 
-    const fileId = uuidv4().toString() + '.png';
+    const fileId = uuidv4().toString();
 
     const fileObjectParams = {
         Bucket: BUCKET_NAME, 
