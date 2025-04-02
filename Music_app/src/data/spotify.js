@@ -1,5 +1,5 @@
 async function getToken() {
-    const url = "https://mywebapp-775f4.ue.r.appspot.com/spotify/token"
+    const url = import.meta.env.VITE_API_URL+"/spotify/token"
     const options = {
         method: "GET"
     }
