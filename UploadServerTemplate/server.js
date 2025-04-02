@@ -3,6 +3,7 @@ const express = require('express')
 const path = require('path')
 const app = express()
 const morgan = require('morgan');
+const uploadRouter = require('./upload.router');
 
 // 1 - Logger middleware
 app.use(morgan('tiny'))
@@ -13,6 +14,10 @@ app.use(express.json()); // body-parser for JSON
 
 // 3 - Routers
 // TODO: Add your routers here
+
+app.use('/static', express.static(path.join(__dirname, 'static')))
+
+app.use('/uploads', uploadRouter)
 
 // 5 - Error handling middleware
 app.use(function (err, req, res, next) {
