@@ -2,7 +2,7 @@ const express = require('express');
 const s3Router = express.Router();
 const multer = require('multer');
 const memoryUpload = multer({ storage: multer.memoryStorage() });
-const { putObject, initializeS3} = require("./aws.module");
+const { putObject, initializeS3, getObject} = require("./aws.module");
 
 initializeS3(); // Initialize S3 client
 
